@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hello World</title>
+    <!-- A CDN link use in frontend to use sockets -->
+    <script
+      src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+      integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <p>Hello World</p>
+    <script>
+      const socket = io();
+
+      // message event will find send request from server
+      socket.on("message", (msg) => {
+        // document.write(msg);    // uncomment this line if want to see message on localhost
+      });
+
+      // listen custom events on client side
+      socket.on("myCustomEvent", (data) => {
+        // document.write(data.des);   //uncomment this line if want to see message on localhost
+      });
+
+      // createing custom event on client side and listen on server side
+
+      socket.emit("myCustomEventClientSide", "A custom message from CLIENT");
+      // socket.on('connect', ()=>{
+      //     console.log("Connected to server");
+      // })
+      // socket.on('disconnect', ()=>{
+      //     console.log("Disconnected from the server");
+      // })
+
+      // listen the broadcast
+    //   socket.on('broadcast', (data) => {
+    //       document.body.innerHTML = '';
+    //       document.write(data.msg);
+    //   })
+    socket.on('newUserConnect', (data) => {
+          document.body.innerHTML = '';
+          document.write(data.msg);
+      })
+
+      // listen the room or channel
+      socket.on('connectedRoom',(data)=>{
+        document.write(data);
+      })
+    </script>
+  </body>
+</html>
